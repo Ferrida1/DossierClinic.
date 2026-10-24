@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.PatientDetailPage" x:DataType="vm:PatientDetailViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <ctl:BackHeader Title="{Binding Name}" Subtitle="{Binding Number}" BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,24" Spacing="12">
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="8">
+                        <ctl:InfoRow Caption="Sexe, âge" Value="{Binding SexAge}" />
+                        <ctl:InfoRow Caption="Naissance" Value="{Binding BirthText}" />
+                        <ctl:InfoRow Caption="Téléphone" Value="{Binding Phone}" />
+                        <ctl:InfoRow Caption="Quartier" Value="{Binding Quarter}" />
+                        <ctl:InfoRow Caption="Groupe sanguin" Value="{Binding BloodGroup}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="#FBE9E5" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="14,10" IsVisible="{Binding HasAllergy}">
+                    <Label Text="{Binding AllergyText}" StyleClass="alertDanger" />
+                </Border>
+                <Border BackgroundColor="#FBF0D9" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="14,10" IsVisible="{Binding HasBalance}">
+                    <Label Text="{Binding BalanceText}" StyleClass="alertWarning" />
+                </Border>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Button Text="Nouvelle consultation" Command="{Binding NewConsultationCommand}" />
+                    <Button Grid.Column="1" Text="Modifier" StyleClass="Secondary" Command="{Binding EditCommand}" WidthRequest="124" />
+                </Grid>
+                <Label Text="{Binding HistoryTitle}" StyleClass="section" Margin="0,10,0,0" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding History}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="svc:HistoryRow">
+                            <Grid ColumnDefinitions="22,*" ColumnSpacing="10" Padding="0,0,0,18">
+                                <BoxView WidthRequest="2" HorizontalOptions="Center" Color="#DCE6E6" />
+                                <Ellipse WidthRequest="12" HeightRequest="12" Fill="#0E6B66" Stroke="#F3F7F7" StrokeThickness="2"
+                                         HorizontalOptions="Center" VerticalOptions="Start" Margin="0,3,0,0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding DateText}" StyleClass="rowsub" VerticalOptions="Center" />
+                                        <ctl:StatusChip Status="{Binding Status}" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="{Binding Title}" StyleClass="rowtitle" FontSize="15" />
+                                    <Label Text="{Binding Subtitle}" StyleClass="rowsub" />
+                                </VerticalStackLayout>
+                                <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnHistoryTapped" /></Grid.GestureRecognizers>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

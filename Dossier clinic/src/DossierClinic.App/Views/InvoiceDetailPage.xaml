@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.InvoiceDetailPage" x:DataType="vm:InvoiceDetailViewModel">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <ctl:BackHeader Title="Consultation" Subtitle="{Binding DateText}" BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,16" Spacing="12">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="{Binding Title}" StyleClass="title" VerticalOptions="Center" />
+                    <ctl:StatusChip Grid.Column="1" Status="{Binding StatusStyle}" />
+                </Grid>
+                <Label Text="{Binding PatientLine}" StyleClass="subtitle" />
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="10">
+                        <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Lines}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="svc:LineRow">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Left}" />
+                                        <Label Grid.Column="1" Text="{Binding Right}" StyleClass="value" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <BoxView StyleClass="Divider" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Total" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="{Binding TotalText}" StyleClass="value" FontSize="16" />
+                        </Grid>
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Payments}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="svc:LineRow">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Left}" StyleClass="muted" />
+                                        <Label Grid.Column="1" Text="{Binding Right}" TextColor="#1E7A4C" FontAttributes="Bold" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Reste à payer" FontAttributes="Bold" TextColor="#C2412D" />
+                            <Label Grid.Column="1" Text="{Binding RemainingText}" FontAttributes="Bold" TextColor="#C2412D" FontSize="16" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="10">
+            <Button Text="Encaisser un paiement" Command="{Binding PayCommand}" IsVisible="{Binding CanPay}" />
+            <Button Text="Partager la facture" StyleClass="Secondary" Command="{Binding ShareInvoiceCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

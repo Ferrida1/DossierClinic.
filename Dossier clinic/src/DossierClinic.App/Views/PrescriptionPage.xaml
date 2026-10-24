@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.PrescriptionPage" x:DataType="vm:PrescriptionViewModel">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <ctl:BackHeader Title="Ordonnance" Subtitle="{Binding Subtitle}" BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,16" Spacing="12">
+                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Lines}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="sm:PrescriptionLine">
+                            <Border StyleClass="Card" Padding="14,12">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Drug}" StyleClass="rowtitle" FontSize="15" />
+                                        <Label Text="{Binding Dosage}" StyleClass="rowsub" />
+                                        <Label Text="{Binding Duration}" StyleClass="rowsub" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="×" FontSize="24" TextColor="#C2412D" VerticalOptions="Start" Padding="8,0">
+                                        <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnRemoveTapped" /></Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Border StyleClass="Field"><Entry Text="{Binding NewDrug}" Placeholder="Médicament" /></Border>
+                <Border StyleClass="Field"><Entry Text="{Binding NewDosage}" Placeholder="Posologie (ex. 1 comprimé 3 fois par jour)" /></Border>
+                <Border StyleClass="Field"><Entry Text="{Binding NewDuration}" Placeholder="Durée (ex. 5 jours)" /></Border>
+                <Button Text="+ Ajouter un médicament" StyleClass="Secondary" Command="{Binding AddCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Text="Enregistrer l’ordonnance" Command="{Binding SaveCommand}" Margin="16,8,16,16" HeightRequest="50" />
+    </Grid>
+</ContentPage>

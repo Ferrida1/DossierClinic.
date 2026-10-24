@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- Brand palette taken from the Figma export -->
+    <Color x:Key="Primary">#0E6B66</Color>
+    <Color x:Key="PrimaryTint">#E0F0EE</Color>
+    <Color x:Key="PrimarySoft">#CDE9E6</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+
+    <Color x:Key="PageLight">#F3F7F7</Color>
+    <Color x:Key="PageDark">#081414</Color>
+    <Color x:Key="CardLight">#FFFFFF</Color>
+    <Color x:Key="CardDark">#0F2123</Color>
+    <Color x:Key="InkLight">#12292B</Color>
+    <Color x:Key="InkDark">#E6F1F1</Color>
+    <Color x:Key="MutedLight">#5B7274</Color>
+    <Color x:Key="MutedDark">#8FA9AB</Color>
+    <Color x:Key="BorderLight">#DCE6E6</Color>
+    <Color x:Key="BorderDark">#1D3638</Color>
+
+    <Color x:Key="Danger">#C2412D</Color>
+    <Color x:Key="DangerBg">#FBE9E5</Color>
+    <Color x:Key="Warning">#A66A00</Color>
+    <Color x:Key="WarningBg">#FBF0D9</Color>
+    <Color x:Key="Success">#1E7A4C</Color>
+    <Color x:Key="SuccessBg">#E2F3EA</Color>
+
+    <!-- Theme-aware aliases -->
+    <AppThemeBinding x:Key="PageBg" Light="{StaticResource PageLight}" Dark="{StaticResource PageDark}" />
+</ResourceDictionary>

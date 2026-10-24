@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.PatientFormPage" x:DataType="vm:PatientFormViewModel">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Text="{Binding Title}" StyleClass="title" Padding="24,24,24,8" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,0,16,16" Spacing="14">
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <ctl:LabeledField Label="Nom" Text="{Binding LastName}" />
+                    <ctl:LabeledField Grid.Column="1" Label="Prénom" Text="{Binding FirstName}" />
+                </Grid>
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Sexe" StyleClass="subtitle" />
+                    <Border StyleClass="Field"><Picker ItemsSource="{Binding Sexes}" SelectedItem="{Binding Sex}" /></Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Date de naissance" StyleClass="subtitle" />
+                    <Border StyleClass="Field"><DatePicker Date="{Binding BirthDate}" Format="dd/MM/yyyy" MaximumDate="{x:Static sys:DateTime.Today}" xmlns:sys="clr-namespace:System;assembly=System.Runtime" /></Border>
+                </VerticalStackLayout>
+                <ctl:LabeledField Label="Téléphone" Text="{Binding Phone}" Keyboard="Telephone" />
+                <ctl:LabeledField Label="Quartier" Text="{Binding Quarter}" />
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Groupe sanguin" StyleClass="subtitle" />
+                    <Border StyleClass="Field"><Picker ItemsSource="{Binding BloodGroups}" SelectedItem="{Binding BloodGroup}" Title="Non renseigné" /></Border>
+                </VerticalStackLayout>
+                <ctl:LabeledField Label="Allergies connues" Text="{Binding Allergies}" Placeholder="Ex. Pénicilline" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="16,8,16,16">
+            <Button Text="Annuler" StyleClass="Secondary" Command="{Binding CancelCommand}" />
+            <Button Grid.Column="1" Text="Enregistrer" Command="{Binding SaveCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

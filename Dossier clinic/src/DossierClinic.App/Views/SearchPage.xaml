@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.SearchPage" x:DataType="vm:SearchViewModel">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,0">
+        <Label Text="Recherche" StyleClass="title" Padding="8,20,0,12" />
+        <Border Grid.Row="1" StyleClass="Field" Margin="0,0,0,10">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="🔍" VerticalOptions="Center" />
+                <Entry Grid.Column="1" Text="{Binding Query}" Placeholder="Patient, motif, diagnostic, médicament…" ReturnType="Search" />
+            </Grid>
+        </Border>
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="10" Padding="0,0,0,16">
+                <Label Text="{Binding ConsultationsTitle}" StyleClass="section" IsVisible="{Binding HasQuery}" />
+                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Consultations}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="svc:ConsultationRow">
+                            <Border StyleClass="Card" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding PatientName}" StyleClass="rowtitle" />
+                                        <Label Text="{Binding Subtitle}" StyleClass="rowsub" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="›" FontSize="24" VerticalOptions="Center" />
+                                </Grid>
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnConsultationTapped" /></Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Text="{Binding PatientsTitle}" StyleClass="section" IsVisible="{Binding HasQuery}" Margin="0,8,0,0" />
+                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Patients}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="svc:PatientRow">
+                            <Border StyleClass="Card" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Name}" StyleClass="rowtitle" />
+                                        <Label Text="{Binding Subtitle}" StyleClass="rowsub" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="›" FontSize="24" VerticalOptions="Center" />
+                                </Grid>
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnPatientTapped" /></Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Text="Astuce : cherchez aussi par téléphone, motif ou nom de médicament." StyleClass="rowsub"
+                       HorizontalTextAlignment="Center" Margin="12,12" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

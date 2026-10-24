@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.SplashPage" BackgroundColor="#0E6B66">
+    <Grid RowDefinitions="*,Auto,Auto" Padding="40,0,40,32">
+        <VerticalStackLayout VerticalOptions="Center" Spacing="14" HorizontalOptions="Center">
+            <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 30"
+                    WidthRequest="120" HeightRequest="120" HorizontalOptions="Center">
+                <Grid>
+                    <BoxView Color="#0E6B66" WidthRequest="20" HeightRequest="68" CornerRadius="6" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <BoxView Color="#0E6B66" WidthRequest="68" HeightRequest="20" CornerRadius="6" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+            <Label Text="DossierClinic" FontSize="32" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center" Margin="0,22,0,0" />
+            <Label Text="Dossiers patients, consultations&#10;et factures, même sans réseau." FontSize="15"
+                   TextColor="#CDE9E6" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <Button Grid.Row="1" x:Name="StartButton" Text="Commencer" BackgroundColor="White" TextColor="#0E6B66"
+                HeightRequest="52" CornerRadius="14" FontSize="16" Clicked="OnStart" />
+        <Label Grid.Row="2" Text="Les données restent sur cet appareil" FontSize="12" TextColor="#CDE9E6"
+               HorizontalTextAlignment="Center" Margin="0,20,0,0" />
+    </Grid>
+</ContentPage>

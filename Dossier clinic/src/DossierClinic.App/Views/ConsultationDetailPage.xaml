@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.ConsultationDetailPage" x:DataType="vm:ConsultationDetailViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <ctl:BackHeader Title="Consultation" Subtitle="{Binding DateText}" BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,24" Spacing="12">
+                <Border StyleClass="Card" Padding="14">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{Binding PatientName}" StyleClass="rowtitle" />
+                            <Label Text="{Binding PatientSub}" StyleClass="rowsub" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1" Text="›" FontSize="24" VerticalOptions="Center" />
+                    </Grid>
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenPatientCommand}" /></Border.GestureRecognizers>
+                </Border>
+                <Border BackgroundColor="#FBE9E5" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="14,10" IsVisible="{Binding HasAllergy}">
+                    <Label Text="{Binding AllergyText}" StyleClass="alertDanger" />
+                </Border>
+
+                <Label Text="Consultation" StyleClass="section" Margin="0,6,0,0" />
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="8">
+                        <ctl:InfoRow Caption="Motif" Value="{Binding Reason}" />
+                        <ctl:InfoRow Caption="Température" Value="{Binding Temperature}" />
+                        <ctl:InfoRow Caption="Tension" Value="{Binding BloodPressure}" />
+                        <ctl:InfoRow Caption="Poids" Value="{Binding Weight}" />
+                        <ctl:InfoRow Caption="Diagnostic" Value="{Binding Diagnosis}" />
+                        <Label Text="{Binding Notes}" StyleClass="muted" IsVisible="{Binding HasNotes}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,6,0,0">
+                    <Label Text="Ordonnance" StyleClass="section" VerticalOptions="Center" />
+                    <HorizontalStackLayout Grid.Column="1" Spacing="14">
+                        <Label Text="Modifier" TextColor="#0E6B66" FontAttributes="Bold" FontSize="14">
+                            <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding EditPrescriptionCommand}" /></Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Partager" TextColor="#0E6B66" FontAttributes="Bold" FontSize="14">
+                            <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding SharePrescriptionCommand}" /></Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Prescription}">
+                        <BindableLayout.EmptyView><Label Text="Aucun médicament prescrit." StyleClass="muted" /></BindableLayout.EmptyView>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="sm:PrescriptionLine">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Drug}" StyleClass="rowtitle" FontSize="15" />
+                                    <Label Text="{Binding Detail}" StyleClass="rowsub" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border StyleClass="Card" IsVisible="{Binding HasInvoice}" Margin="0,6,0,0">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding InvoiceTitle}" StyleClass="rowtitle" FontSize="15" VerticalOptions="Center" />
+                            <ctl:StatusChip Grid.Column="1" Status="{Binding InvoiceStyle}" />
+                        </Grid>
+                        <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding InvoiceLines}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="svc:LineRow">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Left}" StyleClass="muted" />
+                                        <Label Grid.Column="1" Text="{Binding Right}" StyleClass="value" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenInvoiceCommand}" /></Border.GestureRecognizers>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

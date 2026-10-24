@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ctl="clr-namespace:DossierClinic.Controls" xmlns:vm="clr-namespace:DossierClinic.ViewModels" xmlns:svc="clr-namespace:DossierClinic.Services" xmlns:sm="clr-namespace:DossierClinic.Shared;assembly=DossierClinic.Shared" xmlns:conv="clr-namespace:DossierClinic.Converters" x:Class="DossierClinic.Views.SettingsPage" x:DataType="vm:SettingsViewModel">
+    <Grid RowDefinitions="Auto,*">
+        <ctl:BackHeader Title="Paramètres" BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,4,16,24" Spacing="12">
+                <Label Text="Clinique" StyleClass="section" />
+                <Border StyleClass="Card"><VerticalStackLayout Spacing="12">
+                    <ctl:LabeledField Label="Nom" Text="{Binding ClinicName}" />
+                    <ctl:LabeledField Label="Praticien" Text="{Binding Practitioner}" />
+                    <ctl:LabeledField Label="Téléphone" Text="{Binding Phone}" Keyboard="Telephone" />
+                    <ctl:LabeledField Label="Tarif de consultation (FCFA)" Text="{Binding ConsultationFee}" Keyboard="Numeric" />
+                </VerticalStackLayout></Border>
+
+                <Label Text="Affichage" StyleClass="section" Margin="0,8,0,0" />
+                <Border StyleClass="Card"><VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Thème sombre" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding DarkTheme}" />
+                    </Grid>
+                    <BoxView StyleClass="Divider" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Langue" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Français" StyleClass="value" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout></Border>
+
+                <Label Text="Serveur (synchronisation facultative)" StyleClass="section" Margin="0,8,0,0" />
+                <Border StyleClass="Card"><VerticalStackLayout Spacing="12">
+                    <ctl:LabeledField Label="Adresse du serveur" Text="{Binding ServerUrl}" Placeholder="https://clinique.exemple.com" Keyboard="Url" />
+                    <ctl:LabeledField Label="Clé API" Text="{Binding ApiKey}" />
+                    <Label Text="{Binding SyncStatus}" StyleClass="rowsub" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <Button Text="Synchroniser maintenant" Command="{Binding SyncNowCommand}" IsEnabled="{Binding IsSyncing, Converter={StaticResource InverseBool}}" />
+                        <ActivityIndicator Grid.Column="1" IsRunning="{Binding IsSyncing}" IsVisible="{Binding IsSyncing}" />
+                    </Grid>
+                </VerticalStackLayout></Border>
+
+                <Label Text="Données" StyleClass="section" Margin="0,8,0,0" />
+                <Border StyleClass="Card" Padding="0"><VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" Padding="16,14">
+                        <Label Text="Exporter une sauvegarde" /><Label Grid.Column="1" Text="›" FontSize="22" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Command="{Binding ExportCommand}" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <BoxView StyleClass="Divider" />
+                    <Grid ColumnDefinitions="*,Auto" Padding="16,14">
+                        <Label Text="Importer une sauvegarde" /><Label Grid.Column="1" Text="›" FontSize="22" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Command="{Binding ImportCommand}" /></Grid.GestureRecognizers>
+                    </Grid>
+                </VerticalStackLayout></Border>
+                <Button Text="Effacer toutes les données" StyleClass="Danger" Command="{Binding WipeCommand}" />
+                <Label Text="DossierClinic 1.0 · données stockées sur l’appareil" StyleClass="rowsub" HorizontalTextAlignment="Center" Margin="0,8,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
