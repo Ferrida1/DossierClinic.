@@ -25,6 +25,5 @@
     <Color x:Key="Success">#1E7A4C</Color>
     <Color x:Key="SuccessBg">#E2F3EA</Color>
 
-    <!-- Theme-aware aliases -->
-    <AppThemeBinding x:Key="PageBg" Light="{StaticResource PageLight}" Dark="{StaticResource PageDark}" />
+       
 </ResourceDictionary>
