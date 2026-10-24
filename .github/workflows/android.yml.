@@ -1,0 +1,36 @@
+name: Build Android APK
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
+      - name: Build APK
+        shell: bash
+        run: |
+          PROJ=$(find . -name DossierClinic.App.csproj | head -n 1)
+          echo "Building $PROJ"
+          dotnet build "$PROJ" -f net8.0-android -c Debug \
+            -p:TargetFrameworks=net8.0-android \
+            -p:EmbedAssembliesIntoApk=true 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: build.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DossierClinic-apk
+          path: "**/bin/Debug/net8.0-android/*-Signed.apk"
