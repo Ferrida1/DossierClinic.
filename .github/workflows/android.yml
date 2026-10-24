@@ -22,6 +22,7 @@ jobs:
           PROJ=$(find . -name DossierClinic.App.csproj | head -n 1)
           echo "Building $PROJ"
           dotnet build "$PROJ" -f net10.0-android -c Debug \
+            -t:SignAndroidPackage \
             -p:EmbedAssembliesIntoApk=true 2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
       - uses: actions/upload-artifact@v4
@@ -32,4 +33,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: DossierClinic-apk
-          path: "**/bin/Debug/net10.0-android/*-Signed.apk"
+          path: "**/bin/Debug/net10.0-android/*.apk"
